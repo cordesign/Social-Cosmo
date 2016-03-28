@@ -49,25 +49,11 @@ if (typeof(Storage) !== "undefined") {
             color2 = data[i].profile_link_color;
                     
             localStorage.setItem(i, JSON.stringify([r2, color2]));
-        }
-        
+        } 
 
-    })
-      
-        
-        
-
-    
-        
-        
+    }) 
        });
-        
-    
 
-
-
-
- 
     // Retrieve
     } else {
         document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
