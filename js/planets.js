@@ -37,7 +37,7 @@ function planet(r, c, tCount, mCount) {
         mentions = JSON.parse(localStorage.getItem(i))
         r2 = mentions[0]
         c2 = mentions[1]
-        var moon = THREEx.Planets.createMoon(r2, c2);
+        var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
         moon.position.set(X,Y,Z)
         scene.add(moon);
     }
