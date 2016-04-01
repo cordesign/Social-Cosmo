@@ -29,12 +29,13 @@ if (typeof(Storage) !== "undefined") {
             });
             
             sessionStorage.setItem("mCount", uniqueMentions.length)
-            localStorage.setItem("user", JSON.stringify([color, r,mCount]));
-  user = JSON.parse(localStorage.getItem("user"))
+            
+sessionStorage.setItem("user", JSON.stringify([color, r,mCount]));
+  user = JSON.parse(sessionStorage.getItem("user"))
             color = user[0]
             r = user[1]
-            mCount = localStorage.getItem("mCount")
-        tCount = localStorage.getItem("tCount")
+            mCount = sessionStorage.getItem("mCount")
+        tCount = sessionStorage.getItem("tCount")
                   
         planet(r, color, tCount, mCount)
             
@@ -42,7 +43,7 @@ if (typeof(Storage) !== "undefined") {
     })
         
     app.get("https://api.twitter.com/1.1/users/lookup.json?screen_name=" + sessionStorage.getItem("q")).done(function(data) { 
-        mCount = localStorage.getItem("mCount")
+        mCount = sessionStorage.getItem("mCount")
         for(i = 0; i < mCount; i++) {
             console.log(data)
             r2 = 0.1 * Math.log(data[i].followers_count);
