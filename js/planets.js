@@ -1,3 +1,5 @@
+
+
 var THREEx = THREEx || {}
 
 THREEx.Planets	= {}
@@ -11,7 +13,7 @@ function planet(r, c, tCount, mCount) {
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 	renderer.shadowMapEnabled	= true
-	
+	var type = -1;
 	var onRenderFcts= [];
 	var scene	= new THREE.Scene();
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
@@ -19,28 +21,61 @@ function planet(r, c, tCount, mCount) {
 
     var light	= new THREE.DirectionalLight( 0xffffff , 1 )
 	light.position.set(5,5,5)
+    lights(light)
 	scene.add( light );
     	
     var starSphere	= THREEx.Planets.createStarfield()
 	scene.add(starSphere)
     
+           $(window).on('hashchange', function(e) {  
+            
+            type = window.location.hash.substr(1);
+               var selected = e.originalEvent.oldURL;
+               selected = selected.substr(selected.length - 1)
+               scene.remove(scene.getObjectByName(selected));
+               
+       $(".active").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
+        
+        mentions = JSON.parse(localStorage.getItem(type))
+        r2 = mentions[1]
+        c2 = mentions[2]
+        x2 = mentions[3]
+        y2 = mentions[4]
+        z2 = mentions[5]
+        var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
+            var geometry	= new THREE.SphereGeometry(r2, 32, 32)
+	var material	= THREEx.createAtmosphereMaterial()
+	material.uniforms.glowColor.value.set("#" + c2)
+	material.uniforms.coeficient.value	= 0.8
+	material.uniforms.power.value		= 2.0
+	var mesh	= new THREE.Mesh(geometry, material );
+	mesh.scale.multiplyScalar(1.01);
+        mesh.position.set(x2, y2, z2)
+        mesh.name = type;
+	scene.add( mesh )
+       
+    
+     
+   
+  //.. work ..
+});
     for(var i = 0; i < mCount; i++){
         
-        min = -3;
-        max = 3;
-
-        
-        X = Math.random() * (max - min) + min
-        Y = Math.random() * (max - min) + min
-        Z = Math.random() * (max - min) + min
-            
+       
         mentions = JSON.parse(localStorage.getItem(i))
-        r2 = mentions[0]
-        c2 = mentions[1]
-        var moon = THREEx.Planets.createMoon(r2, c2);
-        moon.position.set(X,Y,Z)
-        scene.add(moon);
+        r2 = mentions[1]
+        c2 = mentions[2]
+        x2 = mentions[3]
+        y2 = mentions[4]
+        z2 = mentions[5]
+       
+        var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
+          
+    
+        moon.position.set(x2,y2,z2)
+            scene.add(moon);
     }
+
     
     for(var i = 0; i < tCount; i++){
         
@@ -62,6 +97,25 @@ function planet(r, c, tCount, mCount) {
     
     var earthMesh = THREEx.Planets.createEarth(r, c);
     scene.add(earthMesh)
+    
+    
+    var geometry	= new THREE.SphereGeometry(r, 32, 32)
+	var material	= THREEx.createAtmosphereMaterial()
+	material.uniforms.glowColor.value.set("#" + c)
+	material.uniforms.coeficient.value	= 0.8
+	material.uniforms.power.value		= 2.0
+	var mesh	= new THREE.Mesh(geometry, material );
+	mesh.scale.multiplyScalar(1.01);
+	scene.add( mesh )
+    
+    $( "canvas" ).click(function() {
+        if(type < mCount-1) {
+      window.location.hash = parseInt(type) + 1;
+        } else {
+            window.location.hash = 0;
+            
+        }
+    });
     
 	var mouse	= {x : 0, y : 0}
 	document.addEventListener('mousemove', function(event){
@@ -128,14 +182,13 @@ THREEx.Planets.createTweet = function(profile_color) {
 THREEx.Planets.createMoon = function(r, c) {
     var geometry = new THREE.SphereGeometry(r, 32 , 32)
     var material = new THREE.MeshPhongMaterial({
-        color: "#" + c
+        color: "#" + 253412
     })
     
     var mesh = new THREE.Mesh(geometry, material)
     
     return mesh
 }
-
 
 
 function lights(light) { 
@@ -154,5 +207,3 @@ function lights(light) {
 	light.shadowMapHeight	= 1024
 
 }
-
-//planet(0.5, 0x0084b4, 10)
