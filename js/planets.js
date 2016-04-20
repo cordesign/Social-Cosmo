@@ -1,10 +1,8 @@
-
-
 var THREEx = THREEx || {}
 
 THREEx.Planets	= {}
 
-THREEx.Planets.baseURL	= '../'
+THREEx.Planets.baseURL	= './'
 
 function planet(r, c, tCount, mCount) {
    var renderer	= new THREE.WebGLRenderer({
@@ -35,6 +33,8 @@ function planet(r, c, tCount, mCount) {
                scene.remove(scene.getObjectByName(selected));
                
        $(".active").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
+       $("#size").html(JSON.parse(localStorage.getItem(type))[6]) 
+       $("#tCount").html(JSON.parse(localStorage.getItem(type))[7]) 
         
         mentions = JSON.parse(localStorage.getItem(type))
         r2 = mentions[1]
@@ -59,23 +59,57 @@ function planet(r, c, tCount, mCount) {
    
   //.. work ..
 });
+
+        
+
     for(var i = 0; i < mCount; i++){
         
-       
-        mentions = JSON.parse(localStorage.getItem(i))
+           mentions = JSON.parse(localStorage.getItem(i))
         r2 = mentions[1]
         c2 = mentions[2]
         x2 = mentions[3]
         y2 = mentions[4]
         z2 = mentions[5]
-       
+        tCount2 = mentions[6]
+        
         var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
-          
-    
         moon.position.set(x2,y2,z2)
             scene.add(moon);
-    }
+        
 
+        
+        
+        
+    }
+        for(var i = 0; i < mCount; i++){
+        
+           mentions = JSON.parse(localStorage.getItem(i))
+        r2 = mentions[1]
+        c2 = mentions[2]
+        x2 = mentions[3]
+        y2 = mentions[4]
+        z2 = mentions[5]
+        tCount2 = mentions[6]
+            for(var i = 0; i < tCount2; i++) {
+           
+        
+        min = -1;
+        max = 1;
+
+        
+        X = x2 + Math.random() * (max - min) + min
+        Y = y2 + Math.random() * (max - min) + min
+        Z = z2 + Math.random() * (max - min) + min
+            
+        var moon2 = THREEx.Planets.createTweet();
+        moon2.position.set(X,Y,Z)
+        moon2.scale.multiplyScalar(1/10)
+        scene.add(moon2);
+        }
+        }
+    
+    
+    
     
     for(var i = 0; i < tCount; i++){
         

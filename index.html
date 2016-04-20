@@ -9,43 +9,54 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
+<link rel="stylesheet" type="text/css" href="style.css">
 
 
 </head>
 <body>
   
-  <nav class="navbar navbar-inverted">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Social Cosmo</a>
-    </div>
+      <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Social Cosmo</a>
+        </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"> <span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">select user <span class="caret"></span></a>
-          <ul class="dropdown-menu">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"> <span class="sr-only">(current)</span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">select user <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
 
 
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
   
   
-   
+   <footer class="footer">
+      <div class="container">
+           
+          <div class="row">
+          <div class="col-xs-6 col-sm-3"><p class="text-muted">Diameter: <span id="size"></span> KM</p></div>
+          <div class="col-xs-6 col-sm-3"> <p class="text-muted">Satellites: <span id="tCount"></span> </p></div>
+          <div class="col-xs-6 col-sm-3"> <p class="text-muted">Surface temperature: <span id="temp"></span></p></div>
+          <div class="col-xs-6 col-sm-3"><p class="text-muted">Age: <span id="time"></span>  </p></div>
+</div>
+      </div>
+    </footer>
+
     <script src="js/oauth.min.js"></script>    
     <script src="js/jquery-1.12.1.min.js"></script>
     <script src='js/three.min.js'></script>
@@ -54,16 +65,15 @@
     <script>
         if(localStorage.getItem("user") != "undefined") {
         var type = window.location.hash.substr(1);
-        if(type == null) {
-    
-        } else {
-              $(".active").html("<a href='#'>" + JSON.parse(localStorage.getItem("user"))[0])
 
-        }
+        
     $(".dropdown-toggle").html("<a href='#'>select user <span class='caret'></span>")
     for(i = 0; i< localStorage.getItem("mCount"); i++) {
     $(".dropdown-menu").append("<li><a style='color: #" + JSON.parse(localStorage.getItem(i))[2] +  "' href='#" + i + "'>" + JSON.parse(localStorage.getItem(i))[0]+"</li>")
+    
     }
+            
+            
         }
     </script>
     
@@ -72,13 +82,9 @@
     
     
     <script src='js/threex.atmospherematerial.js'></script>
-<!-- include for threex.glowdatgui 
-<script src='vendor/three.js/examples/js/libs/dat.gui.min.js'></script>-->
-<script src="js/threex.atmospheredatgui.js"></script>
-<script>
-    if(localStorage.getItem("user") != "undefined") {
+    <script src="js/threex.atmospheredatgui.js"></script>
+    <script>
 
-    }
                 
 
 </script>
