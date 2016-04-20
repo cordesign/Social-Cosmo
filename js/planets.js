@@ -1,3 +1,5 @@
+
+
 var THREEx = THREEx || {}
 
 THREEx.Planets	= {}
@@ -35,6 +37,8 @@ function planet(r, c, tCount, mCount) {
        $(".active").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
        $("#size").html(JSON.parse(localStorage.getItem(type))[6]) 
        $("#tCount").html(JSON.parse(localStorage.getItem(type))[7]) 
+       $("#description").html(JSON.parse(localStorage.getItem(type))[8]) 
+       
         
         mentions = JSON.parse(localStorage.getItem(type))
         r2 = mentions[1]
@@ -75,12 +79,10 @@ function planet(r, c, tCount, mCount) {
         var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
         moon.position.set(x2,y2,z2)
             scene.add(moon);
-        
 
         
-        
-        
     }
+    console.log(tCount2)
         for(var i = 0; i < mCount; i++){
         
            mentions = JSON.parse(localStorage.getItem(i))
@@ -90,11 +92,12 @@ function planet(r, c, tCount, mCount) {
         y2 = mentions[4]
         z2 = mentions[5]
         tCount2 = mentions[6]
+        console.log(tCount2)
             for(var i = 0; i < tCount2; i++) {
            
-        
-        min = -1;
-        max = 1;
+            
+        min = -2;
+        max = 2;
 
         
         X = x2 + Math.random() * (max - min) + min
@@ -102,6 +105,7 @@ function planet(r, c, tCount, mCount) {
         Z = z2 + Math.random() * (max - min) + min
             
         var moon2 = THREEx.Planets.createTweet();
+            
         moon2.position.set(X,Y,Z)
         moon2.scale.multiplyScalar(1/10)
         scene.add(moon2);
@@ -120,7 +124,14 @@ function planet(r, c, tCount, mCount) {
         X = Math.random() * (max - min) + min
         Y = Math.random() * (max - min) + min
         Z = Math.random() * (max - min) + min
+        
+         while((X< 0 + r && X> 0 - r) && (Y < 0+ r && Y> 0 - r) && (Z < 0 + r && Z> 0 - r) ){
             
+             X = Math.random() * (max - min) + min;
+             Y = Math.random() * (max - min) + min;
+             Z = Math.random() * (max - min) + min;
+        }
+        
         var moon = THREEx.Planets.createTweet();
         moon.position.set(X,Y,Z)
         moon.scale.multiplyScalar(1/10)

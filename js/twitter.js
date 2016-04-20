@@ -1,7 +1,7 @@
 var app;
 var mCount, tCount, user;
   
-OAuth.initialize('eEbjYcFK9aW8RzozGMH9cTwAhPo')
+OAuth.initialize('cEqJYbWSBFatbZu-UWFggR1XKc4')
 
 OAuth.popup('twitter', {cache: true}).done(function(data) {
     app = data;
@@ -46,6 +46,7 @@ function handleMentions(data)
             localStorage.setItem("user", JSON.stringify([name, color, r, size]));
     
     app.get("https://api.twitter.com/1.1/users/lookup.json?screen_name=" + localStorage.getItem("q")).done(lookupMentions);
+    
 }
 
 function lookupMentions(data)
@@ -57,9 +58,9 @@ function lookupMentions(data)
                     r2 = 0.1 * Math.log(data[i].followers_count);
                     size2 = data[i].followers_count;
                     color2 = data[i].profile_link_color;
-                    name = data[i].name;
+                    name = data[i].screen_name;
     
-                    
+                    twit = data[i].description;
                     tCount2 = data[i].statuses_count
                     console.log(tCount2)
                      min = -3;
@@ -70,8 +71,10 @@ function lookupMentions(data)
         y2 = Math.random() * (max - min) + min
         z2 = Math.random() * (max - min) + min
         
-                    localStorage.setItem(i, JSON.stringify([name, r2, color2, x2, y2, z2, size2, tCount2]));
+                    localStorage.setItem(i, JSON.stringify([name, r2, color2, x2, y2, z2, size2, tCount2, twit]));
+                    
                 } 
+    
                 user = JSON.parse(localStorage.getItem("user"))
                 color = user[1]
                 r = user[2]
@@ -81,4 +84,20 @@ function lookupMentions(data)
                 planet(r, color, tCount, mCount)
                 $("#size").append(size);
                 $("#tCount").append(tCount);
+    $(window).on('hashchange', function(e) {  
+            
+            type = window.location.hash.substr(1);
+        app.get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" + JSON.parse(localStorage.getItem(type))[0] + "&count=200").done(lookupTweets);
+        
+        
+    })
 }
+
+function lookupTweets(data) {
+                 console.log(data)
+                 $("#twits").html("<p></p>")
+                 for(i = 0; i<data.length; i++) {
+                     
+                     $("#twits").append("<p>" + data[i].text + "</p>")
+                 }
+                 }
