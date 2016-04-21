@@ -121,7 +121,7 @@ function planet(r, c, tCount, mCount) {
         z2 = mentions[8]
         tCount2 = mentions[4]
         console.log(tCount2)
-            for(var i = 0; i < tCount2; i++) {
+            for(var j = 0;j <= 100; j++) {
            
             
         min = -2;
