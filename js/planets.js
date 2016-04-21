@@ -131,6 +131,17 @@ function planet(r, c, tCount, mCount) {
         X = x2 + Math.random() * (max - min) + min
         Y = y2 + Math.random() * (max - min) + min
         Z = z2 + Math.random() * (max - min) + min
+        
+        var orbit = r2+0.2;
+        
+            var u = Math.random() 
+            var v = Math.random() 
+            var theta = 2 * Math.PI * u;
+            var phi = Math.acos(2 * v - 1);
+            X = x2 + (orbit * Math.sin(phi) * Math.cos(theta));
+            Y = y2 + (orbit * Math.sin(phi) * Math.sin(theta));
+            Z = z2 + (orbit * Math.cos(phi));
+                
             
         var moon2 = THREEx.Planets.createTweet();
             
@@ -145,20 +156,21 @@ function planet(r, c, tCount, mCount) {
     
     for(var i = 0; i < tCount; i++){
         
-        min = -1;
-        max = 1;
-
+         min = -r - 0.2;
+        max = r+ 0.2;
         
-        X = Math.random() * (max - min) + min
-        Y = Math.random() * (max - min) + min
-        Z = Math.random() * (max - min) + min
         
-         while((X< 0 + r && X> 0 - r) && (Y < 0+ r && Y> 0 - r) && (Z < 0 + r && Z> 0 - r) ){
-            
-             X = Math.random() * (max - min) + min;
-             Y = Math.random() * (max - min) + min;
-             Z = Math.random() * (max - min) + min;
-        }
+            var orbit = r+0.2;
+            var center = 0;
+            var u = Math.random() 
+            var v = Math.random() 
+            var theta = 2 * Math.PI * u;
+            var phi = Math.acos(2 * v - 1);
+            X = center + (orbit * Math.sin(phi) * Math.cos(theta));
+            Y = center + (orbit * Math.sin(phi) * Math.sin(theta));
+            Z = center + (orbit * Math.cos(phi));
+        
+        
         
         var moon = THREEx.Planets.createTweet();
         moon.position.set(X,Y,Z)

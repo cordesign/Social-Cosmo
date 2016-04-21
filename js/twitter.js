@@ -26,8 +26,9 @@ function handleCredentials(data)
     q = ""
     mentions = []; 
     uniqueMentions = [];
+    userDate = data.created_at.substr(data.created_at.length-4, data.created_at.length)
     
-    $("#time").append(data.created_at.substr(data.created_at.length-4, data.created_at.length))
+    $("#time").append(userDate)
     
     app.get("https://api.twitter.com/1.1/statuses/user_timeline.json").done(handleMentions);
 }
@@ -48,7 +49,7 @@ function handleMentions(data)
                 if($.inArray(el, uniqueMentions) === -1) uniqueMentions.push(el); //tirar pronto nome
             });
             localStorage.setItem("mCount", uniqueMentions.length)
-            localStorage.setItem("0", JSON.stringify([name, color, r, size, tCount,time]));
+            localStorage.setItem("0", JSON.stringify([name, color, r, size, tCount]));
             $("#tCount").html(JSON.parse(localStorage.getItem("0"))[4]) 
     
     app.get("https://api.twitter.com/1.1/users/lookup.json?screen_name=" + localStorage.getItem("q")).done(lookupMentions);
@@ -76,7 +77,8 @@ function lookupMentions(data)
         x2 = Math.random() * (max - min) + min
         y2 = Math.random() * (max - min) + min
         z2 = Math.random() * (max - min) + min
-        
+            date = data[i].created_at;
+                    date.substr(date.length-4,date.length)
                     localStorage.setItem(i+1, JSON.stringify([name, color2, r2, size2, tCount2, twit, x2, y2, z2]));
                     
                 } 
@@ -147,7 +149,11 @@ function lookupTweets(data) {
                    $("#select").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
                     $("#size").html(JSON.parse(localStorage.getItem(type))[3]) 
                     $("#tCount").html(JSON.parse(localStorage.getItem(type))[4]) 
-               date = data[type].created_at;
+                date = data[type]["user"].created_at;
                 $("#time").html(date.substr(date.length-4,date.length))
+                
+                if(type == 0) {
+                    $("#time").html(userDate)
+                }
     
                  }
