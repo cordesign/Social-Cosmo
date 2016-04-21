@@ -23,29 +23,57 @@ function planet(r, c, tCount, mCount) {
 	light.position.set(5,5,5)
     lights(light)
 	scene.add( light );
-    	
+    	//name, color2, r2, size2, tCount2, twit, x2, y2, z2
     var starSphere	= THREEx.Planets.createStarfield()
 	scene.add(starSphere)
+ type = window.location.hash.substr(1);
+        $(".active").html("<a href='#0'>" + JSON.parse(localStorage.getItem("0"))[0])
+        $("#select").html("select user")
+        for(i = 1; i<= localStorage.getItem("mCount"); i++) {
+            $(".dropdown-menu").append("<li><a style='color: #" + JSON.parse(localStorage.getItem(i))[1] +  "' href='#" + i + "'>" + JSON.parse(localStorage.getItem(i))[0]+"</li>")
+        }
     
            $(window).on('hashchange', function(e) {  
-            
-            type = window.location.hash.substr(1);
+               
+                type = window.location.hash.substr(1);
+               
+               if(type == 0) {
+                    var geometry	= new THREE.SphereGeometry(r, 32, 32)
+                    var material	= THREEx.createAtmosphereMaterial()
+
+                    material.uniforms.glowColor.value.set("#" + c)
+                    material.uniforms.coeficient.value	= 0.8
+                    material.uniforms.power.value		= 2.0
+                    var mesh	= new THREE.Mesh(geometry, material );
+                    mesh.scale.multiplyScalar(1.01);
+                    scene.add( mesh )
+                    mesh.name = 0;
+               } else {
+               
+               scene.remove(scene.getObjectByName(0));
+               }
+              
+                   $("#select").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
+                    $("#size").html(JSON.parse(localStorage.getItem(type))[3]) 
+                    $("#tCount").html(JSON.parse(localStorage.getItem(type))[4]) 
+               
+                $("#select").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
+       $("#size").html(JSON.parse(localStorage.getItem(type))[3]) 
+       $("#tCount").html(JSON.parse(localStorage.getItem(type))[4]) 
+        $("#twits").append(JSON.parse(localStorage.getItem(type))[5]) 
+           
                var selected = e.originalEvent.oldURL;
                selected = selected.substr(selected.length - 1)
                scene.remove(scene.getObjectByName(selected));
                
-       $(".active").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
-       $("#size").html(JSON.parse(localStorage.getItem(type))[6]) 
-       $("#tCount").html(JSON.parse(localStorage.getItem(type))[7]) 
-       $("#description").html(JSON.parse(localStorage.getItem(type))[8]) 
        
         
         mentions = JSON.parse(localStorage.getItem(type))
-        r2 = mentions[1]
-        c2 = mentions[2]
-        x2 = mentions[3]
-        y2 = mentions[4]
-        z2 = mentions[5]
+        c2 = mentions[1]
+        r2 = mentions[2]
+        x2 = mentions[6]
+        y2 = mentions[7]
+        z2 = mentions[8]
         var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
             var geometry	= new THREE.SphereGeometry(r2, 32, 32)
 	var material	= THREEx.createAtmosphereMaterial()
@@ -64,17 +92,17 @@ function planet(r, c, tCount, mCount) {
   //.. work ..
 });
 
-        
+        //name, color2, r2, size2, tCount2, twit, x2, y2, z2
 
     for(var i = 0; i < mCount; i++){
         
            mentions = JSON.parse(localStorage.getItem(i))
-        r2 = mentions[1]
-        c2 = mentions[2]
-        x2 = mentions[3]
-        y2 = mentions[4]
-        z2 = mentions[5]
-        tCount2 = mentions[6]
+        c2 = mentions[1]
+        r2 = mentions[2]
+        x2 = mentions[6]
+        y2 = mentions[7]
+        z2 = mentions[8]
+        tCount2 = mentions[4]
         
         var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
         moon.position.set(x2,y2,z2)
@@ -86,12 +114,12 @@ function planet(r, c, tCount, mCount) {
         for(var i = 0; i < mCount; i++){
         
            mentions = JSON.parse(localStorage.getItem(i))
-        r2 = mentions[1]
-        c2 = mentions[2]
-        x2 = mentions[3]
-        y2 = mentions[4]
-        z2 = mentions[5]
-        tCount2 = mentions[6]
+        c2 = mentions[1]
+        r2 = mentions[2]
+        x2 = mentions[6]
+        y2 = mentions[7]
+        z2 = mentions[8]
+        tCount2 = mentions[4]
         console.log(tCount2)
             for(var i = 0; i < tCount2; i++) {
            
@@ -144,20 +172,16 @@ function planet(r, c, tCount, mCount) {
     scene.add(earthMesh)
     
     
-    var geometry	= new THREE.SphereGeometry(r, 32, 32)
-	var material	= THREEx.createAtmosphereMaterial()
-	material.uniforms.glowColor.value.set("#" + c)
-	material.uniforms.coeficient.value	= 0.8
-	material.uniforms.power.value		= 2.0
-	var mesh	= new THREE.Mesh(geometry, material );
-	mesh.scale.multiplyScalar(1.01);
-	scene.add( mesh )
+   
     
     $( "canvas" ).click(function() {
-        if(type < mCount-1) {
+      
+            window.location.hash = 1
+        
+        if(type >= 1) {
       window.location.hash = parseInt(type) + 1;
         } else {
-            window.location.hash = 0;
+           // window.location.hash = 0;
             
         }
     });
