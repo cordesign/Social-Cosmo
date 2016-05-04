@@ -69,19 +69,10 @@
     <script src="js/jquery-1.12.1.min.js"></script>
     <script src='js/three.min.js'></script>
     <script src='js/twitter.js'></script>
-    <script src='js/planets.js'></script>
-   
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    
-    
-    <script src='js/threex.atmospherematerial.js'></script>
-    <!-- include for threex.glowdatgui 
-    <script src='vendor/three.js/examples/js/libs/dat.gui.min.js'></script>-->
-    <script src="js/threex.atmospheredatgui.js"></script>
     <script>
-            </script>    
-<script>$(document).ready(function(){
-	$('#opener').on('click', function() {		
+       
+$(document).ready(function() {
+    $('#opener').on('click', function() {		
 		var panel = $('#slide-panel');
 		if (panel.hasClass("visible")) {
 			panel.removeClass('visible').animate({'margin-left':'-300px'});
@@ -91,6 +82,18 @@
 		}	
 		return false;	
 	});
-});</script>
+})
+       
+       </script>
+    <script src='js/planets.js'></script>
+   
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
+    
+    <script src='js/threex.atmospherematerial.js'></script>
+    <!-- include for threex.glowdatgui 
+    <script src='vendor/three.js/examples/js/libs/dat.gui.min.js'></script>-->
+    <script src="js/threex.atmospheredatgui.js"></script>
+
 
 </body>

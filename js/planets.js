@@ -1,47 +1,104 @@
 
+var x = {};
+var y = {};
+var z = {};
+type = 0;
 
 var THREEx = THREEx || {}
 
 THREEx.Planets	= {}
 
-THREEx.Planets.baseURL	= './'
+THREEx.Planets.baseURL	= '/'
 
-function planet(r, c, tCount, mCount) {
+function planet() {
+    
+    
    var renderer	= new THREE.WebGLRenderer({
 		antialias	: true
 	});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 	renderer.shadowMapEnabled	= true
-	var type = -1;
+	var type = 0;
+    type = window.location.hash.substr(1);
 	var onRenderFcts= [];
 	var scene	= new THREE.Scene();
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
 	camera.position.z = 1;
-
+    
     var light	= new THREE.DirectionalLight( 0xffffff , 1 )
 	light.position.set(5,5,5)
-    lights(light)
 	scene.add( light );
-    	//name, color2, r2, size2, tCount2, twit, x2, y2, z2
     var starSphere	= THREEx.Planets.createStarfield()
 	scene.add(starSphere)
- type = window.location.hash.substr(1);
-        $(".active").html("<a href='#0'>" + JSON.parse(localStorage.getItem("0"))[0])
-        $("#select").html("select user")
-        for(i = 1; i<= localStorage.getItem("mCount"); i++) {
-            $(".dropdown-menu").append("<li><a style='color: #" + JSON.parse(localStorage.getItem(i))[1] +  "' href='#" + i + "'>" + JSON.parse(localStorage.getItem(i))[0]+"</li>")
+    
+    
+
+    
+    
+            for(var i = 0; i <= mCount; i++){
+                        min = -7;
+        max = 7;
+                
+                x[i] = Math.random() * (max - min) + min
+                y[i] = Math.random() * (max - min) + min
+                z[i] = Math.random() * (max - min) + min
+                x[0] = 0
+                y[0] = 0
+                z[0] = 0
+
+                var earthCloud	= THREEx.Planets.createEarthCloud(r[i])
+                earthCloud.position.set(x[i],y[i],z[i])
+	            scene.add(earthCloud)
+                
+                var moon = THREEx.Planets.createPlanet(r[i]); //r2- radius of the neighbour planet, c2- color
+                moon.position.set(x[i],y[i],z[i])
+                scene.add(moon);
+         
+                for(var j = 0;j <=Math.log( tCount[i]) && j <= 50; j++) {
+
+        
+        var orbit = r[i]+ 0.5;
+        
+            var u = Math.random() 
+            var v = Math.random() 
+            var theta = 2 * Math.PI * u;
+            var phi = Math.acos(2 * v - 1);
+            X = x[i] + (orbit * Math.sin(phi) * Math.cos(theta));
+            Y = y[i] + (orbit * Math.sin(phi) * Math.sin(theta));
+            Z = z[i] + (orbit * Math.cos(phi));
+                
+            
+        var tweet = THREEx.Planets.createTweet(r[i]);
+        tweet.position.set(X,Y,Z)
+        tweet.scale.multiplyScalar(1/6)
+        scene.add(tweet);
+        }
         }
     
-           $(window).on('hashchange', function(e) {  
+    
+    
+         
+     $(window).on('hashchange', function(e) {  
                
                 type = window.location.hash.substr(1);
-               
+         $(".active").html("<img src='" + avatar[type] + "'/>")
+    $("#select").html("<a href='#'>" + names[type]) 
+    $("#size").html(size[type]) 
+    $("#tCount").html(tCount[type]) 
+    $("#time").html(userDate[type]) 
+               var selected = e.originalEvent.oldURL;
+               selected = selected.substr(selected.length - 1)
+               scene.remove(scene.getObjectByName(selected));
                if(type == 0) {
-                    var geometry	= new THREE.SphereGeometry(r, 32, 32)
+                   
+               
+               scene.remove(scene.getObjectByName(selected));
+                   
+                    var geometry	= new THREE.SphereGeometry(r[0], 32, 32)
                     var material	= THREEx.createAtmosphereMaterial()
 
-                    material.uniforms.glowColor.value.set("#" + c)
+                    material.uniforms.glowColor.value.set("#" + color[0])
                     material.uniforms.coeficient.value	= 0.8
                     material.uniforms.power.value		= 2.0
                     var mesh	= new THREE.Mesh(geometry, material );
@@ -49,142 +106,23 @@ function planet(r, c, tCount, mCount) {
                     scene.add( mesh )
                     mesh.name = 0;
                } else {
-               
-               scene.remove(scene.getObjectByName(0));
-               }
-              
-                   $("#select").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
-                    $("#size").html(JSON.parse(localStorage.getItem(type))[3]) 
-                    $("#tCount").html(JSON.parse(localStorage.getItem(type))[4]) 
-               
-                $("#select").html("<a href='#'>" + JSON.parse(localStorage.getItem(type))[0]) 
-       $("#size").html(JSON.parse(localStorage.getItem(type))[3]) 
-       $("#tCount").html(JSON.parse(localStorage.getItem(type))[4]) 
-        $("#twits").append(JSON.parse(localStorage.getItem(type))[5]) 
-           
-               var selected = e.originalEvent.oldURL;
-               selected = selected.substr(selected.length - 1)
                scene.remove(scene.getObjectByName(selected));
-               
-       
         
-        mentions = JSON.parse(localStorage.getItem(type))
-        c2 = mentions[1]
-        r2 = mentions[2]
-        x2 = mentions[6]
-        y2 = mentions[7]
-        z2 = mentions[8]
-        var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
-            var geometry	= new THREE.SphereGeometry(r2, 32, 32)
+       
+            var geometry	= new THREE.SphereGeometry(r[type], 32, 32)
 	var material	= THREEx.createAtmosphereMaterial()
-	material.uniforms.glowColor.value.set("#" + c2)
+	material.uniforms.glowColor.value.set("#" + color[type])
 	material.uniforms.coeficient.value	= 0.8
 	material.uniforms.power.value		= 2.0
 	var mesh	= new THREE.Mesh(geometry, material );
 	mesh.scale.multiplyScalar(1.01);
-        mesh.position.set(x2, y2, z2)
+        mesh.position.set(x[type], y[type], z[type])
         mesh.name = type;
 	scene.add( mesh )
-       
-    
-     
+               }
    
   //.. work ..
 });
-
-        //name, color2, r2, size2, tCount2, twit, x2, y2, z2
-
-    for(var i = 0; i < mCount; i++){
-        
-           mentions = JSON.parse(localStorage.getItem(i))
-        c2 = mentions[1]
-        r2 = mentions[2]
-        x2 = mentions[6]
-        y2 = mentions[7]
-        z2 = mentions[8]
-        tCount2 = mentions[4]
-        
-        var moon = THREEx.Planets.createMoon(r2, c2); //r2- radius of the neighbour planet, c2- color
-        moon.position.set(x2,y2,z2)
-            scene.add(moon);
-
-        
-    }
-    console.log(tCount2)
-        for(var i = 0; i < mCount; i++){
-        
-           mentions = JSON.parse(localStorage.getItem(i))
-        c2 = mentions[1]
-        r2 = mentions[2]
-        x2 = mentions[6]
-        y2 = mentions[7]
-        z2 = mentions[8]
-        tCount2 = mentions[4]
-        console.log(tCount2)
-            for(var j = 0;j <= 100; j++) {
-           
-            
-        min = -2;
-        max = 2;
-
-        
-        X = x2 + Math.random() * (max - min) + min
-        Y = y2 + Math.random() * (max - min) + min
-        Z = z2 + Math.random() * (max - min) + min
-        
-        var orbit = r2+0.2;
-        
-            var u = Math.random() 
-            var v = Math.random() 
-            var theta = 2 * Math.PI * u;
-            var phi = Math.acos(2 * v - 1);
-            X = x2 + (orbit * Math.sin(phi) * Math.cos(theta));
-            Y = y2 + (orbit * Math.sin(phi) * Math.sin(theta));
-            Z = z2 + (orbit * Math.cos(phi));
-                
-            
-        var moon2 = THREEx.Planets.createTweet();
-            
-        moon2.position.set(X,Y,Z)
-        moon2.scale.multiplyScalar(1/10)
-        scene.add(moon2);
-        }
-        }
-    
-    
-    
-    
-    for(var i = 0; i < tCount; i++){
-        
-         min = -r - 0.2;
-        max = r+ 0.2;
-        
-        
-            var orbit = r+0.2;
-            var center = 0;
-            var u = Math.random() 
-            var v = Math.random() 
-            var theta = 2 * Math.PI * u;
-            var phi = Math.acos(2 * v - 1);
-            X = center + (orbit * Math.sin(phi) * Math.cos(theta));
-            Y = center + (orbit * Math.sin(phi) * Math.sin(theta));
-            Z = center + (orbit * Math.cos(phi));
-        
-        
-        
-        var moon = THREEx.Planets.createTweet();
-        moon.position.set(X,Y,Z)
-        moon.scale.multiplyScalar(1/10)
-        scene.add(moon);
-    }
-    
-    
-    
-    var earthMesh = THREEx.Planets.createEarth(r, c);
-    scene.add(earthMesh)
-    
-    
-   
     
     $( "canvas" ).click(function() {
       
@@ -229,62 +167,94 @@ function planet(r, c, tCount, mCount) {
 }
 
 THREEx.Planets.createStarfield	= function(){
+    var geometry	= new THREE.SphereGeometry(70, 32, 32)
 	var texture	= THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/galaxy_starfield.png')
 	var material	= new THREE.MeshBasicMaterial({
 		map	: texture,
 		side	: THREE.BackSide
 	})
-	var geometry	= new THREE.SphereGeometry(70, 32, 32)
+	
 	var mesh	= new THREE.Mesh(geometry, material)
 	return mesh	
 }
 
-THREEx.Planets.createEarth = function(r, profile_color) {
-    
-    var geometry = new THREE.SphereGeometry(r,32,32)
-    var material = new THREE.MeshPhongMaterial({
-        color: "#" + profile_color
-    })
-    var mesh = new THREE.Mesh(geometry, material)
-    
-    return mesh
-    
-}
-THREEx.Planets.createTweet = function(profile_color) {
-    var geometry = new THREE.SphereGeometry(0.1, 32 , 32)
-    var material = new THREE.MeshPhongMaterial({
-        color: "#" + profile_color
-    })
-    var mesh = new THREE.Mesh(geometry, material)
-    
-    return mesh
+THREEx.Planets.createTweet = function(r) {
+  var geometry	= new THREE.SphereGeometry(r, 32, 32)
+	var material	= new THREE.MeshPhongMaterial({
+		map	: THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/moonmap1k.jpg'),
+		bumpMap	: THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/moonbump1k.jpg'),
+		bumpScale: 0.002,
+	})
+	var mesh	= new THREE.Mesh(geometry, material)
+	return mesh
 }
 
-THREEx.Planets.createMoon = function(r, c) {
-    var geometry = new THREE.SphereGeometry(r, 32 , 32)
-    var material = new THREE.MeshPhongMaterial({
-        color: "#" + 253412
-    })
-    
-    var mesh = new THREE.Mesh(geometry, material)
-    
-    return mesh
+THREEx.Planets.createPlanet = function(r, c) {
+   	var geometry	= new THREE.SphereGeometry(r, 32, 32)
+	var material	= new THREE.MeshPhongMaterial({
+		map	: THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/earthmap1k.jpg'),
+		bumpMap	: THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/earthbump1k.jpg'),
+		bumpScale: 0.002,
+	})
+	var mesh	= new THREE.Mesh(geometry, material)
+	return mesh
 }
 
 
-function lights(light) { 
-	light.castShadow	= true
-	light.shadowCameraNear	= 0.01
-	light.shadowCameraFar	= 15
-	light.shadowCameraFov	= 45
-	light.shadowCameraLeft	= -1
-	light.shadowCameraRight	=  1
-	light.shadowCameraTop	=  1
-	light.shadowCameraBottom= -1
-	// light.shadowCameraVisible	= true
-	light.shadowBias	= 0.001
-	light.shadowDarkness	= 0.2
-	light.shadowMapWidth	= 1024
-	light.shadowMapHeight	= 1024
+THREEx.Planets.createEarthCloud	= function(r){
+	// create destination canvas
+	var canvasResult	= document.createElement('canvas')
+	canvasResult.width	= 1024
+	canvasResult.height	= 512
+	var contextResult	= canvasResult.getContext('2d')		
 
+	// load earthcloudmap
+	var imageMap	= new Image();
+	imageMap.addEventListener("load", function() {
+		
+		// create dataMap ImageData for earthcloudmap
+		var canvasMap	= document.createElement('canvas')
+		canvasMap.width	= imageMap.width
+		canvasMap.height= imageMap.height
+		var contextMap	= canvasMap.getContext('2d')
+		contextMap.drawImage(imageMap, 0, 0)
+		var dataMap	= contextMap.getImageData(0, 0, canvasMap.width, canvasMap.height)
+
+		// load earthcloudmaptrans
+		var imageTrans	= new Image();
+		imageTrans.addEventListener("load", function(){
+			// create dataTrans ImageData for earthcloudmaptrans
+			var canvasTrans		= document.createElement('canvas')
+			canvasTrans.width	= imageTrans.width
+			canvasTrans.height	= imageTrans.height
+			var contextTrans	= canvasTrans.getContext('2d')
+			contextTrans.drawImage(imageTrans, 0, 0)
+			var dataTrans		= contextTrans.getImageData(0, 0, canvasTrans.width, canvasTrans.height)
+			// merge dataMap + dataTrans into dataResult
+			var dataResult		= contextMap.createImageData(canvasMap.width, canvasMap.height)
+			for(var y = 0, offset = 0; y < imageMap.height; y++){
+				for(var x = 0; x < imageMap.width; x++, offset += 4){
+					dataResult.data[offset+0]	= dataMap.data[offset+0]
+					dataResult.data[offset+1]	= dataMap.data[offset+1]
+					dataResult.data[offset+2]	= dataMap.data[offset+2]
+					dataResult.data[offset+3]	= 255 - dataTrans.data[offset+0]
+				}
+			}
+			// update texture with result
+			contextResult.putImageData(dataResult,0,0)	
+			material.map.needsUpdate = true;
+		})
+		imageTrans.src	= THREEx.Planets.baseURL+'images/earthcloudmaptrans.jpg';
+	}, false);
+	imageMap.src	= THREEx.Planets.baseURL+'images/earthcloudmap.jpg';
+
+	var geometry	= new THREE.SphereGeometry(r+0.01, 32, 32)
+	var material	= new THREE.MeshPhongMaterial({
+		map		: new THREE.Texture(canvasResult),
+		side		: THREE.DoubleSide,
+		transparent	: true,
+		opacity		: 0.8,
+	})
+	var mesh	= new THREE.Mesh(geometry, material)
+	return mesh	
 }
