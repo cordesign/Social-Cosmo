@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Cosmo</title>
+</head>
+<body>
+    
+</body>
+</html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Cosmo</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="js/jquery-1.12.1.min.js"></script>
+
+
+</head>
+<body>
+    <div id="main">
+       <div id="contain">
+        <h1 id="title">Social Cosmo</h1>
+                   
+                    
+        <div id="instr">
+        <p>Entra com uma conta twitter para ver o projecto.</p>
+        <p>Controla a rotação da camâra com o movimento do rato.</p>
+        <p>Controla o zoom da camâra com o scroll do rato.</p>
+        <p>Utiliza a caixa de texto para pesquisar utilizadores.</p>
+        </div>
+        
+<div id="log">
+            <button class="btn btn-info" href="#0" onclick="twitter()">Twitter</button>
+           </div>
+        
+        </div>
+    </div>
+  <div id="ui">
+      <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#0">Social Cosmo</a>
+         
+
+        </div>
+    
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active" > <span class="sr-only"><span id="user"></span></span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="select"></span> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+              </ul>
+            </li>
+          </ul>
+<div class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input id="userSearch" type="text" class="form-control" placeholder="Search">
+        </div>
+        <button href='#0' id="btn" type="submit" class="btn btn-default">Submit</button>
+      </div>
+       
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+<div id="slide-panel">
+		<a href="#" class="btn" id="opener"><img src="images/twitter.png"  style="width:50px;height:50px;"></a>
+        
+		<div id="twits">
+		    <ul id="tweets">
+                
+            </ul>
+		</div>
+	</div>
+
+   <footer class="footer">
+      <div class="container">
+           
+          <div class="row">
+          <div class="col-xs-6 col-sm-3"><p class="text-muted">Diameter: <span id="size"></span> KM</p></div>
+          <div class="col-xs-6 col-sm-3"> <p class="text-muted">Satellites: <span id="tCount"></span> </p></div>
+          <div class="col-xs-6 col-sm-3"> <p class="text-muted">Surface temperature: <span id="temp"></span></p></div>
+          <div class="col-xs-6 col-sm-3"><p class="text-muted">Formation Date: <span id="time"></span>  </p></div>
+</div>
+
+   
+    </footer>
+</div>
+    <script src="js/oauth.min.js"></script>    
+    <script src="js/jquery-1.12.1.min.js"></script>
+    <script src='js/three.min.js'></script>
+    <script src='js/twitter.js'></script>
+              <script>
+              
+              $("#btn").click(function() {
+                               
+              twitter($("#userSearch").val())
+                              })
+
+            </script>
+            
+            
+    <script>
+       
+$(document).ready(function() {
+    $('#opener').on('click', function() {		
+		var panel = $('#slide-panel');
+		if (panel.hasClass("visible")) {
+			panel.removeClass('visible').animate({'margin-left':'-300px'});
+      $('#content').css({'margin-right':'0px'});
+		} else {panel.addClass('visible').animate({'margin-left':'0px'});
+      $('#content').css({'margin-right':'-300px'});
+		}	
+		return false;	
+	});
+
+   
+})
+
+       
+       </script>
+       
+    <script src='js/planets.js'></script>
+   
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
+    
+    <script src='js/threex.atmospherematerial.js'></script>
+    <script src='js/wunder.js'></script>
+
+
+</body>

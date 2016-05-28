@@ -1,0 +1,129 @@
+body {
+    background-color: #0D0D0D;
+}
+
+#main {
+    width: 103%;
+    height: 105%;
+    position: fixed;
+    z-index: 2;
+    margin-top: -3%;
+    margin-left: -3%;
+    
+    
+    
+}
+#ui {
+    opacity: 0;
+}
+canvas {
+    margin-top: -3%;
+}
+#instr p {
+    
+    
+        margin-bottom: -2px;
+    
+        
+}
+#contain {
+    padding-bottom: 20px;
+    background-color: #0C3559;
+    border-radius: 25px;
+    left: -25%;
+    margin-left: 60%;
+    margin-top: -50px;
+    position: absolute;
+    top: 40%;
+    width: 25%;
+    
+}
+
+#instr {
+    
+    font-family: Garamond;
+    font-size: 15px;
+    color: #86B7D0;
+    text-align: center;
+    
+}
+#log button {
+    width: 100%;
+    margin-top: 25px;
+}
+
+@media (max-width:960px) { 
+#contain {
+    left: 0;
+    margin-left: 10px;
+    width: 100%;
+    
+}
+    
+    #log button {
+    width: 100%;
+}
+    
+    #instr {
+    margin-left: 5px;
+        text-align: center;
+}
+}
+
+#title {
+color: #ECFDFF;
+    margin-bottom: 25px;
+    font-family: Arial;
+    text-align: center;
+}
+
+.footer {
+position: absolute;
+bottom: 0;
+width: 100%;
+height: 60px;
+background-color: #000;
+}
+
+/* aash1010 */
+body
+{
+	overflow: hidden;
+    overflow-y:hidden;
+}
+#slide-panel {
+    width:300px;
+    height:800px;
+    padding:10px;
+    background:#eee;
+    margin-left:-300px;
+    float: left;
+    max-width: 300px;
+     z-index:1; 
+    position: absolute;
+}
+#opener {
+    float:right;
+    margin:-10px -80px 0px 0px;
+    border-radius:0;
+    
+    z-index:1015; 
+   position: relative;
+}
+#content
+{
+    height: 500px;
+    width: 100%;
+    float: left;
+	padding-left: 5%;
+     z-index:1015; 
+    position: absolute;
+}
+#twits 
+{
+    position:fixed;
+    overflow-y: scroll;
+    position: relative;
+    height: 780px;
+    
+}
